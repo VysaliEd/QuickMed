@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - QuickMed Finder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script> <!-- GSAP for animations -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Fade-in Effect */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeIn 1s forwards;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Button Hover */
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Background */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('C:/Users/Vyshu/Desktop/HACATHON/QuickMed/background.jpg.webp');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Login Container */
+        .container {
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-green-100 flex items-center justify-center min-h-screen">
+    <div class="container fade-in mx-auto p-6 shadow-lg rounded-xl text-center w-96">
+        <h1 class="text-2xl font-bold mb-4 text-green-700">QuickMed Finder</h1>
+        <button class="btn w-full bg-green-500 text-white px-4 py-2 mb-3" onclick="location.href='login3.html'">Sign in with Gmail</button>
+        <button class="btn w-full bg-green-500 text-white px-4 py-2" onclick="location.href='login2.html'">Sign in with Mobile</button>
+    </div>
+</body>
+</html>

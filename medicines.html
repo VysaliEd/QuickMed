@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicines</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            background-image: url('C:/Users/Vyshu/Desktop/HACATHON/QuickMed/background.jpg.webp');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .heading {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: green;
+            margin-top: -50px;
+            margin-bottom: 40px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 15px 40px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 0px 0px 10px 10px;
+        }
+
+        .nav a {
+            color: green;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .search-container {
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .search-bar {
+            width: 300px;
+            padding: 10px;
+            border: 2px solid green;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            width: 60%;
+            text-align: center;
+        }
+
+        .list-item {
+            font-size: 18px;
+            color: green;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-bottom: 2px solid green;
+        }
+    </style>
+</head>
+<body>
+    <!-- Heading -->
+    <h1 class="heading">Medicines</h1>
+
+    <input type="text" class="search-bar" placeholder="Search for hospitals or pharmacies..." 
+            onfocus="this.placeholder=''" onblur="this.placeholder='Search for hospitals or pharmacies...'" 
+            onkeyup="filterResults()">
+
+    <!-- Navigation Bar -->
+    <nav class="nav">
+        <a href="home.html">Back to Main</a>
+        <a href="login.html">Logout</a>
+    </nav>
+
+     
+    <!-- Content Section -->
+    <div class="content">
+        <div class="list-item"><strong>Paracetmol</strong> - Fever</div>
+        <div class="list-item"><strong>Dolo-650</strong> - Fever/ Body Pains</div>
+        <div class="list-item"><strong>citrazen</strong> - Cold</div>
+        <div class="list-item"><strong>Dizene</strong> - Gastric</div>
+    </div>
+
+    <script>
+        function filterResults() {
+            let input = document.querySelector(".search-bar").value.toLowerCase();
+            let items = document.querySelectorAll(".list-item");
+
+            items.forEach(item => {
+                if (item.innerText.toLowerCase().includes(input)) {
+                    item.style.display = "block";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+</html>

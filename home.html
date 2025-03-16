@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickMed Finder - Main</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('C:/Users/Vyshu/Desktop/HACATHON/QuickMed/background.jpg.webp'); /* Ensure correct path */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        /* Heading */
+        .heading {
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: green;
+            margin-top: -80px; /* Moves it higher */
+            margin-bottom: 60px; /* Increases spacing below */
+        }
+
+        /* Navigation Bar */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 15px 40px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 0px 0px 10px 10px;
+        }
+
+        .nav a {
+            color: green;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Buttons Section */
+        .buttons-container {
+            display: flex;
+            flex-direction: row; /* Aligns buttons in the same line */
+            justify-content: center;
+            gap: 50px; /* Increased spacing between buttons */
+        }
+
+        .button {
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 15px;
+            font-weight:bold;
+            padding: 12px 20px;
+            border:2px solid green;
+            border-radius: 20px;
+            background:transparent;
+            color: green;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .button:hover {
+            background: green;
+            color : black;
+        }
+    </style>
+</head>
+<body>
+    <!-- Heading -->
+    <h1 class="heading">Welcome to QuickMed Finder</h1>
+
+    <!-- Navigation Bar -->
+    <nav class="nav">
+        <a href="#">QuickMed Finder</a>
+        <a href="login.html">Logout</a>
+    </nav>
+
+    <!-- Buttons Section -->
+    <div class="buttons-container">
+        <button class="button" onclick="location.href='nearest.html'">Nearest Hospitals & Medical Stores</button>
+        <button class="button" onclick="location.href='medicines.html'">Medicines</button>
+        <button class="button" onclick="location.href='cart.html'">Cart</button>
+        <button class="button" onclick="location.href='profile.html'">Profile</button> 
+    </div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('C:/Users/Vyshu/Desktop/HACATHON/QuickMed/background.jpg.webp'); /* Keep the same background */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            padding: 8px;
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            width: 50%;
+        }
+        .heading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: green;
+        }
+        .cart-icon {
+            shape-image-threshold:url('C:\Users\Vyshu\Desktop\HACATHON\QuickMed\shopping-cart-icon-512x462-yrde1eu0.png');
+            width: 30px;
+            height: 30px;
+        }
+        .search-bar {
+            width: 80%;
+            padding: 10px;
+            border: 2px solid green;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+        .search-bar:focus {
+            outline: none;
+        }
+        .cart-list {
+            margin-top: 20px;
+            text-align: left;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid green;
+        }
+        .cart-item {
+            padding: 10px;
+            border-bottom: 1px solid green;
+        }
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: green;
+            border: 2px solid green;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .back-button:hover {
+            background: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heading">
+            <img src="cart-icon.png" alt="Cart" class="cart-icon">
+            <span>Your Cart</span>
+        </div>
+
+        <input type="text" class="search-bar" placeholder="Search in cart..." 
+            onfocus="this.placeholder=''" onblur="this.placeholder='Search in cart...'">
+
+        <div class="cart-list">
+            <div class="cart-item">Item 1</div>
+            <div class="cart-item">Item 2</div>
+            <div class="cart-item">Item 3</div>
+        </div>
+
+        <button class="back-button" onclick="window.location.href='home.html'">Back to Main</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - QuickMed Finder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('C:/Users/Vyshu/Desktop/HACATHON/QuickMed/background.jpg.webp');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .heading {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: green;
+            margin-top: -60px;
+            margin-bottom: 40px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 15px 40px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 0px 0px 10px 10px;
+        }
+
+        .nav a {
+            color: green;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .profile-container {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            width: 60%;
+            text-align: center;
+        }
+
+        .profile-item {
+            font-size: 18px;
+            color: green;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-bottom: 2px solid green;
+        }
+    </style>
+</head>
+<body>
+    <!-- Heading -->
+    <h1 class="heading">User Profile</h1>
+
+    <!-- Navigation Bar -->
+    <nav class="nav">
+        <a href="home.html">Back to Main</a>
+        <a href="login.html">Logout</a>
+    </nav>
+
+    <!-- Profile Section -->
+    <div class="profile-container">
+        <div class="profile-item"><strong>Name:</strong> John Doe</div>
+        <div class="profile-item"><strong>Email:</strong> johndoe@example.com</div>
+        <div class="profile-item"><strong>Completed Orders:</strong> 5</div>
+        <div class="profile-item"><strong>Last Purchase:</strong> Painkillers - March 10, 2025</div>
+    </div>
+</body>
+</html>
