@@ -3,110 +3,88 @@ const express = require("express");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
-const bodyParser = require("body-parser");
+const crypto = require("crypto");
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json()); // No need for body-parser
 
-// ✅ Connect to MongoDB
-mongoose.connect("mongodb://localhost:27017/userDB")
+// 🔹 MongoDB Connection
+mongoose.connect("mongodb://127.0.0.1:27017/quickmed", { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("✅ MongoDB Connected"))
-    .catch(err => console.error("❌ MongoDB Connection Error:", err));
+    .catch(err => console.error("❌ MongoDB Error:", err));
 
-// ✅ User Schema
-const userSchema = new mongoose.Schema({
-    email: String,
-    otp: String,
-    isVerified: { type: Boolean, default: false }
+// 🔹 User Schema (For Storing OTPs)
+const UserSchema = new mongoose.Schema({
+    email: { type: String, required: true, unique: true },
+    otp: { type: String, required: true },
+    otpExpires: { type: Date, required: true }
 });
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", UserSchema);
 
-// ✅ Configure Nodemailer
+// 🔹 Nodemailer Configuration
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-        user: process.env.EMAIL_USER, // Your Gmail
-        pass: process.env.EMAIL_PASS  // Your Gmail App Password
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD
     }
 });
 
-// ✅ Endpoint to send OTP
+// 🔹 Generate Random OTP
+const generateOTP = () => crypto.randomInt(100000, 999999).toString(); // 6-digit OTP
+
+// 📌 **1. API to Send OTP**
 app.post("/send-otp", async (req, res) => {
-    const { email } = req.body;
-    const otp = Math.floor(100000 + Math.random() * 900000); // Generate 6-digit OTP
-
     try {
-        // Save OTP to DB (Create or Update User)
-        let user = await User.findOne({ email });
-        if (user) {
-            user.otp = otp;
-        } else {
-            user = new User({ email, otp });
-        }
-        await user.save();
+        const { email } = req.body;
+        if (!email) return res.status(400).json({ success: false, message: "Email is required" });
 
-        // Send OTP via Email
+        const otp = generateOTP();
+        const expiryTime = new Date(Date.now() + 5 * 60 * 1000); // 5 mins expiry
+
+        await User.findOneAndUpdate({ email }, { email, otp, otpExpires: expiryTime }, { upsert: true });
+
+        // 🔹 Send OTP via Email
         const mailOptions = {
-            from: process.env.EMAIL_USER,
+            from: process.env.EMAIL,
             to: email,
             subject: "Your OTP Code",
-            text: `Your OTP is: ${otp}. It is valid for 5 minutes.`
+            text: `Your OTP is ${otp}. It will expire in 5 minutes.`
         };
+
         await transporter.sendMail(mailOptions);
 
-        res.json({ message: "OTP sent successfully!" });
+        res.json({ success: true, message: "OTP sent successfully!" });
     } catch (error) {
-        res.status(500).json({ message: "Error sending OTP", error });
+        console.error("❌ Error sending OTP:", error);
+        res.status(500).json({ success: false, message: "Internal Server Error" });
     }
 });
 
-// ✅ Endpoint to verify OTP & register/login user
+// 📌 **2. API to Verify OTP**
 app.post("/verify-otp", async (req, res) => {
-    const { email, otp } = req.body;
-
     try {
+        const { email, otp } = req.body;
+        if (!email || !otp) return res.status(400).json({ success: false, message: "Email and OTP are required" });
+
         const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ message: "User not found" });
 
-        if (user.otp === otp) {
-            user.isVerified = true;
-            user.otp = null; // Clear OTP after successful verification
-            await user.save();
-            res.json({ message: "OTP verified successfully! Account created.", success: true });
-        } else {
-            res.status(400).json({ message: "Invalid OTP", success: false });
-        }
+        if (!user) return res.status(400).json({ success: false, message: "User not found" });
+
+        if (user.otp !== otp) return res.status(400).json({ success: false, message: "Invalid OTP" });
+
+        if (user.otpExpires < new Date()) return res.status(400).json({ success: false, message: "OTP has expired" });
+
+        await User.deleteOne({ email });
+
+        res.json({ success: true, message: "OTP verified successfully!" });
     } catch (error) {
-        res.status(500).json({ message: "Error verifying OTP", error });
+        console.error("❌ Error verifying OTP:", error);
+        res.status(500).json({ success: false, message: "Internal Server Error" });
     }
 });
 
-// ✅ Start Server
-app.listen(5000, () => console.log("🚀 Server running on port 5000"));
-
-const jwt = require("jsonwebtoken");
-
-app.post("/verify-otp", (req, res) => {
-    const { email, otp } = req.body;
-    
-    if (otpStore[email] === otp) { // Check OTP validity
-        const token = jwt.sign({ email }, "your_secret_key", { expiresIn: "1h" });
-
-        res.json({ message: "OTP verified successfully.", success: true, token });
-    } else {
-        res.json({ message: "Invalid or expired OTP.", success: false });
-    }
-});
-const rateLimit = require("express-rate-limit");
-
-const otpLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 5, // Limit to 5 OTP requests per IP
-    message: "Too many OTP requests, please try again later."
-});
-
-app.post("/send-otp", otpLimiter, (req, res) => {
-    // Send OTP logic here
-});
-
+// 🔹 Start Server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
